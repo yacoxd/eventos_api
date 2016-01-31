@@ -84,7 +84,7 @@ $config['rest_realm'] = 'REST API';
 |	'session' = check for PHP session variable. Set variable name below.
 |
 */
-$config['rest_auth'] = '';
+$config['rest_auth'] = 'basic';
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ $config['rest_auth'] = '';
 |	If 'rest_auth' is 'session' then set 'auth_source' to the name of the session variable to check for.
 |
 */
-$config['auth_source'] = '';
+$config['auth_source'] = 'library';
 
 /*
 |--------------------------------------------------------------------------
@@ -110,7 +110,7 @@ $config['auth_source'] = '';
 | In other cases override the function _perform_library_auth in your controller
 |
 */
-$config['auth_library_class'] = 'GPvalidation';
+$config['auth_library_class'] = 'Auth';
 $config['auth_library_function'] = 'login';
 
 /*

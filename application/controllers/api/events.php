@@ -14,8 +14,8 @@ class Events extends REST_Controller{
         parent::__construct();
         
         $this->size_response = 3;
-        $this->user_id = 1;
-        $this->user_username = 'yacoxd';
+        $this->user_id  = $this->session->userdata('user_id');
+        $this->user_username = $this->session->userdata('username');
     }
 
     function all_events_get(){

@@ -30,7 +30,7 @@ class Users extends REST_Controller{
         
         $data = array();
         
-        if (! $user =$this->user->get($this->user_id)){
+        if (! $user = $this->user->get($this->user_id)){
             $this->response(array('msg', 'User not found, call Grumpy cat!'),500);
         }
         
@@ -77,9 +77,54 @@ class Users extends REST_Controller{
             
         if ($this->user->update($this->user_id,$data)){
              $this->response(array('msg', 'Success'),200);    
-         } else {
+        } else {
              $this->response(array('msg', 'Database Problem, call Grumpy cat!'),500);
-         }
+        }
+    }
+    
+    function register_post(){
+        
+        $data = array();
+        
+        if (!$this->post('username') 
+            || !$this->post('email')
+            || !$this->post('first_name')
+            || !$this->post('last_name')
+            || !$this->post('pwd')) {
+            $this->response(array('msg', 'Bad Request Problem, call Grumpy cat!'),400);
+        }
+        
+        if ($this->post('username')){
+          if ($this->user->get_by(array('us_username' => $this->post('username'),))){
+             $this->response(array('msg', 'Username already used'),201); 
+          }
+          $data['us_username'] = $this->post('username');
+        } 
+
+        if ($this->post('email')){
+          if ($this->user->get_by(array('us_email' => $this->post('email'), ))){
+             $this->response(array('msg', 'Email already used'),201); 
+          }
+          $data['us_email'] = $this->post('email');
+        } 
+        
+        if ($this->post('first_name')) $data['us_first_name'] = $this->post('first_name');
+        if ($this->post('last_name')) $data['us_last_name'] = $this->post('last_name');
+        if ($this->post('pwd')) md5($data['us_password'] = $this->post('pwd'));
+        
+        if ($data) {
+            
+            $data['us_user_created'] = $this->user_username;
+            $data['us_date_created'] = date('Y-m-d H:i:s');
+            
+            if ($user = $this->user->insert($data)){
+                $this->response(array('msg', 'Success ' . $user),200);    
+            } else {
+                $this->response(array('msg', 'Database Problem, call Grumpy cat!'),500);
+            }     
+        } else {
+            $this->response(array('msg', 'Bad Request Problem, call Grumpy cat!'),400);
+        }
     }
     
     private function _upload_profile($name, $destination, $file, $name_old = FALSE) {

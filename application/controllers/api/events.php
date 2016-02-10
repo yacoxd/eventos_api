@@ -33,7 +33,7 @@ class Events extends REST_Controller{
         $response = array();
         
         foreach($events as $event){
-            $response[]['info'] = @$event;
+            //$response[]['info'] = @$event;
             $directory = "uploads/".$event['ev_id']."/";
             $images = glob($directory . "*.jpg");
             $images_event = array();
@@ -46,8 +46,15 @@ class Events extends REST_Controller{
             
             $assistants = $this->event->get_all_assistences_by_event($event['ev_id']);
             
-            $response[]['images'] = @$images_event;
-            $response[]['assistants'] = @$assistants;
+            //$response[]['info']['images'] = @$images_event;
+            //$response[]['info']['assistants'] = @$assistants;
+
+            $response[] = array(
+                    'info' => @$event,
+                    'image' => @$images_event,
+                    'assistants' => @$assistants,
+                );
+
         }
         
         if ($response){

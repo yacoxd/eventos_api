@@ -12,9 +12,11 @@ class Auth {
     }
     
     private function _check_password($user_pwd, $pwd_form){
+        
         if (md5($pwd_form) == $user_pwd) {
             return TRUE;
         }
+        
         return FALSE;
     } 
 

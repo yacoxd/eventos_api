@@ -25,7 +25,12 @@ class Users extends REST_Controller{
             $this->response(array('msg', 'User not found, call Grumpy cat!'),500);
         }
     }
-    
+
+    function auth_post(){
+        print_r($this->input->post());
+        
+    }
+
     public function edit_post(){
         
         $data = array();

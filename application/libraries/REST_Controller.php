@@ -1293,6 +1293,7 @@ abstract class REST_Controller extends CI_Controller
      */
     protected function _check_login($username = '', $password = false)
     {
+        
         if (empty($username)) {
             return false;
         }

@@ -27,7 +27,7 @@ class Events extends REST_Controller{
             $id = $this->get('after');
             $events = $this->event->limit($this->size_response)->order_by('ev_id', 'desc')->get_many_by(array('ev_id < ' => $id ));
         } else {
-            $events = $this->event->limit($this->size_response)->get_all();
+            $events = $this->event->limit($this->size_response)->order_by('ev_id', 'desc')->get_all();
         }
         
         $response = array();
@@ -45,14 +45,17 @@ class Events extends REST_Controller{
             }
             
             $assistants = $this->event->get_all_assistences_by_event($event['ev_id']);
+            $total_assistants = $this->event->get_total_assistences_by_event($event['ev_id']);
             
             //$response[]['info']['images'] = @$images_event;
             //$response[]['info']['assistants'] = @$assistants;
 
             $response[] = array(
                     'info' => @$event,
+                    'date' => date('d-m-Y h:i:s a', strtotime(@$event['ev_date_time'])),
                     'image' => @$images_event,
                     'assistants' => @$assistants,
+                    'total_assistants' => @$total_assistants,
                 );
 
         }

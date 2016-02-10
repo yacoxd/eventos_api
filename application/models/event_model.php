@@ -35,6 +35,25 @@ class Event_model extends MY_Model {
         
     }
 
+    public function get_total_assistences_by_event($event_id){
+        
+        $this->db->select('ifnull(sum(ue_cant),0) as total')
+                ->from($this->_table)
+                ->join('ev_user_event', 'ue_event = ev_id')
+                ->join('ev_user', 'ue_user = us_id')
+                ->where('ev_id', $event_id)
+                ->group_by('ev_id');
+                
+        $query = $this->db->get();
+                
+        if ($query->num_rows() == 0) {
+            return array('total' => 0);
+        } else {
+            return $query->row_array();
+        }
+        
+    }
+
 }
 
 /* End of file role_model.php */
